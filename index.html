@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GalArt - Portfolio d'Art Contemporain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Raleway', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .artistic-bg {
+            background: linear-gradient(135deg, rgba(249,244,239,1) 0%, rgba(255,255,255,1) 100%);
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(20,30,48,0.8) 0%, rgba(36,59,85,0.9) 100%);
+        }
+        
+        .artwork-hover:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .gallery-filter-btn.active {
+            background-color: #1a365d;
+            color: white;
+        }
+        
+        .artwork-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .artwork-item:hover .artwork-overlay {
+            opacity: 1;
+        }
+        
+        .nav-link {
+            position: relative;
+            color: #2d3748;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #1a365d;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .swiper-button-next, 
+        .swiper-button-prev {
+            color: #1a365d !important;
+        }
+    </style>
+</head>
+<body class="artistic-bg">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white bg-opacity-90 shadow-sm z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0">
+                    <span class="text-2xl font-bold text-gray-800">GalArt</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link px-3 py-2 text-sm font-medium">Accueil</a>
+                        <a href="#about" class="nav-link px-3 py-2 text-sm font-medium">L'Artiste</a>
+                        <a href="#gallery" class="nav-link px-3 py-2 text-sm font-medium">Galerie</a>
+                        <a href="#exhibitions" class="nav-link px-3 py-2 text-sm font-medium">Expositions</a>
+                        <a href="#contact" class="nav-link px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-800 hover:text-indigo-800 focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Accueil</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">L'Artiste</a>
+                <a href="#gallery" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Galerie</a>
+                <a href="#exhibitions" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Expositions</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient pt-32 pb-20 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:flex lg:items-center lg:justify-between">
+                <div class="lg:w-1/2 mb-10 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Plongez dans l'univers de <span class="text-blue-200">GalArt</span></h1>
+                    <p class="text-xl md:text-2xl mb-6">Où l'art abstrait rencontre l'émotion pure</p>
+                    <div class="flex space-x-4">
+                        <a href="#gallery" class="bg-white text-blue-800 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition duration-300">
+                            <i class="fas fa-palette mr-2"></i>Voir les œuvres
+                        </a>
+                        <a href="#contact" class="border border-white text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-800 transition duration-300">
+                            <i class="fas fa-envelope mr-2"></i>Contactez-moi
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-lg rounded-xl overflow-hidden shadow-2xl">
+                        <img src="https://placehold.co/800x500" alt="Grande toile abstraite aux couleurs vives avec des textures marquées, dominée par des bleus profonds et des touches d'or" class="w-full h-auto object-cover" />
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
+                            <p class="text-white text-xl">"L'Éveil", 2023 - Technique mixte sur toile (120x80cm)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Artist -->
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">L'Artiste</h2>
+                <div class="w-24 h-1 bg-blue-800 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-2/5 mb-10 md:mb-0 flex justify-center">
+                    <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-lg overflow-hidden shadow-xl">
+                        <img src="https://placehold.co/500x500" alt="Portrait de l'artiste dans son atelier, pinceau à la main devant une grande toile en cours de création, vêtue d'un tablier taché de peinture" class="w-full h-full object-cover" />
+                    </div>
+                </div>
+                <div class="md:w-3/5 md:pl-12">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Galina Artemova</h3>
+                    <div class="text-blue-800 mb-6">Peintre contemporaine | Art abstrait | Techniques mixtes</div>
+                    
+                    <p class="text-gray-600 mb-4">
+                        Née à Paris en 1985, Galina Artemova s'est formée aux Beaux-Arts avant de développer un style unique mêlant abstraction lyrique et expressionnisme contemporain.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        Son travail explore les émotions humaines à travers la matière et la couleur, créant des œuvres vibrantes qui évoluent entre figuration et abstraction. Ses toiles, souvent de grand format, invitent le spectateur à une immersion sensorielle.
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-graduation-cap text-blue-700 mr-2"></i>Formation</h4>
+                            <ul class="text-gray-600 space-y-2">
+                                <li>École Nationale Supérieure des Beaux-Arts, Paris</li>
+                                <li>Master en Histoire de l'Art, Sorbonne</li>
+                                <li>Résidence artistique à Berlin, 2017</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-trophy text-blue-700 mr-2"></i>Distinctions</h4>
+                            <ul class="text-gray-600 space-y-2">
+                                <li>Prix de la Jeune Création, 2019</li>
+                                <li>Sélection FIAC Hors-les-Murs, 2020</li>
+                                <li>Artiste en résidence, Villa Médicis 2021</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <a href="#" class="bg-blue-800 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-900 transition duration-300 inline-flex items-center">
+                            <i class="fas fa-book-open mr-2"></i>CV Artistique
+                        </a>
+                        <a href="#exhibitions" class="border border-blue-800 text-blue-800 px-6 py-2 rounded-lg font-medium hover:bg-blue-50 transition duration-300 inline-flex items-center">
+                            <i class="fas fa-calendar-alt mr-2"></i>Expositions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Galerie d'Œuvres</h2>
+                <div class="w-24 h-1 bg-blue-800 mx-auto mb-6"></div>
+                
+                <div class="flex flex-wrap justify-center gap-2 mb-8">
+                    <button class="gallery-filter-btn active px-4 py-2 rounded-full border border-blue-800 text-blue-800 font-medium hover:bg-blue-800 hover:text-white transition duration-200" data-filter="all">Toutes</button>
+                    <button class="gallery-filter-btn px-4 py-2 rounded-full border border-blue-800 text-blue-800 font-medium hover:bg-blue-800 hover:text-white transition duration-200" data-filter="abstrait">Abstrait</button>
+                    <button class="gallery-filter-btn px-4 py-2 rounded-full border border-blue-800 text-blue-800 font-medium hover:bg-blue-800 hover:text-white transition duration-200" data-filter="technique-mixte">Technique mixte</button>
+                    <button class="gallery-filter-btn px-4 py-2 rounded-full border border-blue-800 text-blue-800 font-medium hover:bg-blue-800 hover:text-white transition duration-200" data-filter="grand-format">Grand format</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Oeuvre 1 -->
+                <div class="artwork-item overflow-hidden rounded-xl bg-white shadow-md artwork-hover transition duration-300" data-category="abstrait">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x800" alt="'Éclosion' - Composition abstraite avec dégradés de rouges et or, textures granulaires et coulures contrôlées" class="w-full h-64 sm:h-80 object-cover" />
+                        <div class="artwork-overlay">
+                            <h3 class="text-xl font-bold mb-1">Éclosion</h3>
+                            <p class="mb-2">2023 | 100x70cm</p>
+                            <p class="text-sm italic">Acrylique et feuille d'or sur toile</p>
+                            <a href="#" class="mt-4 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oeuvre 2 -->
+                <div class="artwork-item overflow-hidden rounded-xl bg-white shadow-md artwork-hover transition duration-300" data-category="grand-format technique-mixte">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x800" alt="'Métamorphose' - Installation murale monumentale combinant peinture à l'huile et éléments sculpturaux en métal" class="w-full h-64 sm:h-80 object-cover" />
+                        <div class="artwork-overlay">
+                            <h3 class="text-xl font-bold mb-1">Métamorphose</h3>
+                            <p class="mb-2">2022 | 200x150cm</p>
+                            <p class="text-sm italic">Huile et métal sur bois</p>
+                            <a href="#" class="mt-4 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oeuvre 3 -->
+                <div class="artwork-item overflow-hidden rounded-xl bg-white shadow-md artwork-hover transition duration-300" data-category="abstrait">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x800" alt="'Lumière intérieure' - Jeu de transparences et superpositions dans des tons bleu profond avec éclats de blanc" class="w-full h-64 sm:h-80 object-cover" />
+                        <div class="artwork-overlay">
+                            <h3 class="text-xl font-bold mb-1">Lumière intérieure</h3>
+                            <p class="mb-2">2023 | 80x60cm</p>
+                            <p class="text-sm italic">Résine pigmentée sur panneau</p>
+                            <a href="#" class="mt-4 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oeuvre 4 -->
+                <div class="artwork-item overflow-hidden rounded-xl bg-white shadow-md artwork-hover transition duration-300" data-category="technique-mixte">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x800" alt="'Érosion' - Collage de matériaux naturels intégrés à la peinture, évoquant des paysages géologiques" class="w-full h-64 sm:h-80 object-cover" />
+                        <div class="artwork-overlay">
+                            <h3 class="text-xl font-bold mb-1">Érosion</h3>
+                            <p class="mb-2">2021 | 90x90cm</p>
+                            <p class="text-sm italic">Matériaux naturels et acrylique</p>
+                            <a href="#" class="mt-4 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oeuvre 5 -->
+                <div class="artwork-item overflow-hidden rounded-xl bg-white shadow-md artwork-hover transition duration-300" data-category="grand-format">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x800" alt="'Infini' - Diptyque aux formes organiques qui semblent flotter dans l'espace, dominé par des verts profonds et des noirs" class="w-full h-64 sm:h-80 object-cover" />
+                        <div class="artwork-overlay">
+                            <h3 class="text-xl font-bold mb-1">Infini</h3>
+                            <p class="mb-2">2020 | 180x120cm (chaque panneau)</p>
+                            <p class="text-sm italic">Acrylique sur toile</p>
+                            <a href="#" class="mt-4 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Oeuvre 6 -->
+                <div class="artwork-item overflow-hidden rounded-xl bg-white shadow-md artwork-hover transition duration-300" data-category="technique-mixte">
+                    <div class="relative">
+                        <img src="https://placehold.co/600x800" alt="'Fragmentations' - Exploration de la texture avec empâtements marqués et incrustations de papier fait main" class="w-full h-64 sm:h-80 object-cover" />
+                        <div class="artwork-overlay">
+                            <h3 class="text-xl font-bold mb-1">Fragmentations</h3>
+                            <p class="mb-2">2022 | 70x100cm</p>
+                            <p class="text-sm italic">Papier et acrylique</p>
+                            <a href="#" class="mt-4 px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-700 transition duration-200">
+                                Voir détails
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block border-2 border-blue-800 text-blue-800 px-8 py-3 rounded-lg font-medium hover:bg-blue-800 hover:text-white transition duration-300">
+                    Voir toutes les œuvres <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exhibitions Section -->
+    <section id="exhibitions" class="py-20 bg-blue-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-2">Expositions</h2>
+                <div class="w-24 h-1 bg-white mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white bg-opacity-10 rounded-xl p-6 hover:bg-opacity-20 transition duration-300">
+                    <div class="text-blue-200 mb-2">15 Oct - 20 Nov 2023</div>
+                    <h3 class="text-xl font-bold mb-2">"Métamorphoses"</h3>
+                    <p class="text-blue-100 mb-4">Galerie Contemporaine, Paris</p>
+                    <p class="text-blue-100">Exposition personnelle présentant une série de 15 œuvres récentes explorant la transformation des matières.</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-xl p-6 hover:bg-opacity-20 transition duration-300">
+                    <div class="text-blue-200 mb-2">5 Jan - 10 Fév 2023</div>
+                    <h3 class="text-xl font-bold mb-2">Biennale d'Art Actuel</h3>
+                    <p class="text-blue-100 mb-4">Centre Culturel, Lyon</p>
+                    <p class="text-blue-100">Participation à la Biennale avec l'œuvre primée "L'Éveil" parmi 50 artistes sélectionnés.</p>
+                </div>
+                
+                <div class="bg-white bg-opacity-10 rounded-xl p-6 hover:bg-opacity-20 transition duration-300">
+                    <div class="text-blue-200 mb-2">22 Mar - 30 Avr 2022</div>
+                    <h3 class="text-xl font-bold mb-2">"Dialogues Matériels"</h3>
+                    <p class="text-blue-100 mb-4">Espace d'Art, Bruxelles</p>
+                    <p class="text-blue-100">Exposition collective avec trois autres artistes explorant les relations entre matériaux et émotions.</p>
+                </div>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <a href="#" class="inline-block border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-blue-800 transition duration-300">
+                    Calendrier complet <i class="fas fa-calendar-alt ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Processus Créatif</h2>
+                <div class="w-24 h-1 bg-blue-800 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-blue
+                    
+                        <!-- Process Section Improved -->
+    <section class="py-20 bg-blue-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Exploration Créative</h2>
+                <div class="w-24 h-1 bg-blue-800 mx-auto"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-4">De l'idée initiale à l'œuvre finale, découvrez mon processus créatif en 4 étapes</p>
+            </div>
+            
+            <div class="relative">
+                <!-- Timeline -->
+                <div class="hidden lg:block absolute left-1/2 h-full w-1 bg-blue-200 -ml-1"></div>
+                
+                <!-- Process Items -->
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-4">
+                    <!-- Step 1 -->
+                    <div class="process-step lg:mb-0">
+                        <div class="relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full text-center transform hover:-translate-y-2">
+                            <div class="icon-box bg-blue-800 mx-auto -mt-10">
+                                <i class="fas fa-lightbulb text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold my-4">Inspiration</h3>
+                            <p class="text-gray-600">Capturer l'essence d'un moment, d'une émotion ou d'un paysage qui éveille ma créativité.</p>
+                            <div class="timeline-dot hidden lg:block"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="process-step lg:mt-20">
+                        <div class="relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full text-center transform hover:-translate-y-2">
+                            <div class="icon-box bg-blue-600 mx-auto -mt-10">
+                                <i class="fas fa-pencil-ruler text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold my-4">Esquisse</h3>
+                            <p class="text-gray-600">Transformation de l'idée en croquis préparatoires et choix des matériaux adéquats.</p>
+                            <div class="timeline-dot hidden lg:block"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="process-step">
+                        <div class="relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full text-center transform hover:-translate-y-2">
+                            <div class="icon-box bg-blue-500 mx-auto -mt-10">
+                                <i class="fas fa-paint-brush text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold my-4">Création</h3>
+                            <p class="text-gray-600">Application des textures, couleurs et techniques mixtes pour donner vie à l'œuvre.</p>
+                            <div class="timeline-dot hidden lg:block"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="process-step lg:mt-20">
+                        <div class="relative bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full text-center transform hover:-translate-y-2">
+                            <div class="icon-box bg-blue-400 mx-auto -mt-10">
+                                <i class="fas fa-search text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold my-4">Finalisation</h3>
+                            <p class="text-gray-600">Affinage des détails, vernissage et préparation pour l'exposition ou la livraison.</p>
+                            <div class="timeline-dot hidden lg:block"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <button id="show-process-btn" class="px-6 py-3 bg-blue-800 text-white rounded-lg font-medium hover:bg-blue-700 transition duration-300 flex items-center mx-auto">
+                    Voir le processus en images <i class="fas fa-camera ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Gallery Modal -->
+    <div id="process-gallery" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-screen overflow-auto relative">
+            <button id="close-process" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times text-2xl"></i>
+            </button>
+            <div class="p-8">
+                <h3 class="text-2xl font-bold mb-6 text-blue-800">Mon Atelier en Images</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <img src="https://placehold.co/600x400" alt="Atelier de l'artiste montrant des esquisses préparatoires sur papier avec des échantillons de couleurs" class="rounded-lg w-full h-auto">
+                        <p class="text-sm text-gray-500 mt-2">Esquisses préparatoires</p>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x400" alt="Pinceaux et outils d'artiste disposés sur une table de travail avec des taches de peinture" class="rounded-lg w-full h-auto">
+                        <p class="text-sm text-gray-500 mt-2">Outils et matériaux</p>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x400" alt="Détail d'une œuvre en cours avec des empâtements marqués et des effets de texture" class="rounded-lg w-full h-auto">
+                        <p class="text-sm text-gray-500 mt-2">Travail de la matière</p>
+                    </div>
+                    <div>
+                        <img src="https://placehold.co/600x400" alt="Artiste en train de signer une œuvre finie dans un atelier lumineux" class="rounded-lg w-full h-auto">
+                        <p class="text-sm text-gray-500 mt-2">Finalisation d'une pièce</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section Improved -->
+    <section id="contact" class="bg-blue-800 py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-white">
+                    <h2 class="text-3xl font-bold mb-4">Travaillons ensemble</h2>
+                    <div class="w-24 h-1 bg-white mb-6"></div>
+                    <p class="text-blue-100 mb-8 max-w-lg">
+                        Que ce soit pour une commande spéciale, une collaboration ou simplement pour échanger sur l'art contemporain, je serais ravie d'avoir de vos nouvelles.
+                    </p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-blue-700 p-3 rounded-lg mr-4">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Atelier</h4>
+                                <p class="text-blue-200">123 Rue des Artistes, 75000 Paris</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-700 p-3 rounded-lg mr-4">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Email</h4>
+                                <a href="mailto:contact@galart.com" class="text-blue-200 hover:text-white">contact@galart.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-blue-700 p-3 rounded-lg mr-4">
+                                <i class="fas fa-phone-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Téléphone</h4>
+                                <a href="tel:+33123456789" class="text-blue-200 hover:text-white">+33 1 23 45 67 89</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex space-x-4">
+                        <a href="#" class="social-icon bg-blue-700 hover:bg-blue-600">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-blue-700 hover:bg-blue-600">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-blue-700 hover:bg-blue-600">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon bg-blue-700 hover:bg-blue-600">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-xl overflow-hidden">
+                    <form id="contact-form" class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Envoyez un message</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-gray-700 mb-2">Nom complet</label>
+                                <input type="text" id="name" name="name" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="email" name="email" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <label for="subject" class="block text-gray-700 mb-2">Sujet</label>
+                            <input type="text" id="subject" name="subject" class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="mt-4">
+                            <label for="message" class="block text-gray-700 mb-2">Message</label>
+                            <textarea id="message" name="message" rows="4" required class="w-full border border-gray-300 px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+                        </div>
+                        <button type="submit" class="mt-6 w-full bg-blue-800 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-2"></i> Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <div class="bg-blue-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h4 class="text-xl font-semibold">Abonnez-vous à ma newsletter</h4>
+                    <p class="text-blue-300">Recevez des exclusivités sur mes nouvelles créations et expositions</p>
+                </div>
+                <form class="flex w-full md:w-auto">
+                    <input type="email" placeholder="Votre email" class="px-4 py-2 rounded-l-lg focus:outline-none text-gray-900 w-full md:w-64">
+                    <button type="submit" class="bg-blue-800 px-6 py-2 rounded-r-lg hover:bg-blue-700 transition duration-300">
+                        S'abonner
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Improved -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">GalArt</h4>
+                    <p class="text-gray-400">
+                        Créations artistiques contemporaines alliant technique traditionnelle et innovation.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Navigation</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white">Accueil</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white">L'Artiste</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-white">Galerie</a></li>
+                        <li><a href="#exhibitions" class="text-gray-400 hover:text-white">Expositions</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Ressources</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Catalogue</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Presse</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">CV Artistique</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Événements</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-semibold mb-4">Légal</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Mentions légales</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Politique de confidentialité</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">CGV</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 mb-4 md:mb-0">© 2023 GalArt. Tous droits réservés.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                        <i class="fab fa-pinterest-p"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to top button -->
+    <a href="#home" id="back-to-top" class="fixed bottom-8 right-8 bg-blue-800 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition duration-300 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <style>
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .process-step {
+            position: relative;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border: 4px solid #1e40af;
+            border-radius: 50%;
+        }
+        
+        .process-step:nth-child(even) .timeline-dot {
+            background: #1e40af;
+        }
+        
+        .process-step:last-child .timeline-dot {
+            display: none;
+        }
+    </style>
+
+    <script>
+        // Process Gallery Modal
+        const showProcessBtn = document.getElementById('show-process-btn');
+        const processGallery = document.getElementById('process-gallery');
+        const closeProcessBtn = document.getElementById('close-process');
+
+        showProcessBtn.addEventListener('click', () => {
+            processGallery.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeProcessBtn.addEventListener('click', () => {
+            processGallery.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('hidden');
+            } else {
+                backToTopBtn.classList.add('hidden');
+            }
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const formData = new FormData(contactForm);
+            const formValues = Object.fromEntries(formData.entries());
+            
+            // Here you would typically send the form data to a server
+            console.log('Formulaire soumis:', formValues);
+            
+            // Show success message
+            alert('Votre message a bien été envoyé. Je vous répondrai dès que possible.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+    </script>
